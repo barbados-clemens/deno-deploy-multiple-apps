@@ -1,0 +1,68 @@
+{
+  "name": "thats-fresh",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/thats-fresh/src",
+  "targets": {
+    "pre-build": {
+      "executor": "@nrwl/vite:build",
+      "options": {}
+    },
+    "copy-files": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": []
+      }
+    },
+    "serve": {
+      "executor": "nx:parallel"
+      "options": {
+        "targets": [
+          {"target": "my-app-frontend:serve", "overrides": {}}, 
+          {"target": "my-app-backend:serve", "overrides": {}}
+          {"target": "my-app-database:serve", "overrides": {}}
+        ]
+      }
+    },
+    "build": {
+      "executor": "@nrwl/deno:bundle",
+      "outputs": ["dist/apps/thats-fresh"],
+      "options": {
+        "main": "apps/thats-fresh/dev.ts",
+        "outputFile": "dist/apps/thats-fresh/main.js",
+        "denoConfig": "apps/thats-fresh/deno.json"
+      },
+      "configurations": {
+        "production": {
+          "main": "apps/thats-fresh/main.ts"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/deno:run",
+      "options": {
+        "buildTarget": "thats-fresh:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "thats-fresh:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nrwl/deno:test",
+      "outputs": ["coverage/apps/thats-fresh"],
+      "options": {
+        "coverageDirectory": "coverage/apps/thats-fresh",
+        "denoConfig": "apps/thats-fresh/deno.json"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/deno:lint",
+      "options": {
+        "denoConfig": "apps/thats-fresh/deno.json"
+      }
+    }
+  },
+  "tags": []
+}

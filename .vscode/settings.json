@@ -1,0 +1,11 @@
+{
+  "deno.enablePaths": [
+    "apps/thats-fresh",
+    "libs/ui-button",
+    "libs/feat-counter"
+  ],
+  "deno.lint": true,
+  "deno.unstable": true,
+  "deno.config": "apps/thats-fresh/deno.json",
+  "deno.importMap": "./import_map.json"
+}
